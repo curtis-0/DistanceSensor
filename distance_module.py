@@ -7,6 +7,8 @@
 
 import RPi.GPIO as GPIO
 import time
+import requests
+import json
 
 # Being module
 
@@ -37,6 +39,21 @@ distance = pulse_duration * 17150
 distance = round(distance, 2)
 
 print("Distance:", distance, "cm")
+
+url = 'http://luah.co.uk/'
+payload = {'distance': distance}
+
+# GET
+r = requests.get(url)
+
+# GET with params in URL
+r = requests.get(url, params=payload)
+
+# POST with form-encoded data
+r = requests.post(url, data=payload)
+
+# POST with JSON 
+r = requests.post(url, data=json.dumps(payload))
 
 GPIO.cleanup()
 
